@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Everyone can read the poems and site pages.
+// Only people listed in the "editors" collection (document ID = their Google email) can write.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isEditor() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && exists(/databases/$(database)/documents/editors/$(request.auth.token.email));
+    }
+
+    match /poems/{poemId} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    match /site/{pageId} {
+      allow read: if true;
+      allow write: if isEditor();
+    }
+
+    // A signed-in person may check whether they themselves are an editor.
+    // Editors are added only from the Firebase console.
+    match /editors/{email} {
+      allow read: if request.auth != null && request.auth.token.email == email;
+      allow write: if false;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+rules_version = '2';
+
+// Photos of handwritten pages and the poet's portrait.
+// Everyone can view them; only editors can upload or delete.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function isEditor() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && firestore.exists(/databases/(default)/documents/editors/$(request.auth.token.email));
+    }
+
+    function isImageOrDelete() {
+      return request.resource == null
+        || (request.resource.size < 15 * 1024 * 1024 && request.resource.contentType.matches('image/.*'));
+    }
+
+    match /pages/{file} {
+      allow read: if true;
+      allow write: if isEditor() && isImageOrDelete();
+    }
+
+    match /portraits/{file} {
+      allow read: if true;
+      allow write: if isEditor() && isImageOrDelete();
+    }
+  }
+}
