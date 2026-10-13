@@ -5,7 +5,8 @@ const store = new Map();
 const docListeners = new Set();
 const queryListeners = new Set();
 const authListeners = new Set();
-let currentUser = null;
+// The preview starts signed in as an editor so Edit, Delete and "+ New writing" are visible straight away.
+let currentUser = { email: "preview-editor@example.com" };
 
 // Sample content from the Nidhyakshar design reference (illustrative, not Nidhi's published work).
 store.set("poems/sample-tumhare-baad", {

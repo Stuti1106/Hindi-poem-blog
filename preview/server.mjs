@@ -14,8 +14,8 @@ const modules = ["firebase-app", "firebase-firestore", "firebase-auth", "firebas
 const importMap = `<script type="importmap">${JSON.stringify({
   imports: Object.fromEntries(modules.map(m => [`${SDK}${m}.js`, "/__preview/firebase-mock.js"])),
 })}</script>`;
-const banner = `<div style="position:sticky;top:0;z-index:9;background:#713C4C;color:#FBF5F0;font:500 13px/1.5 Inter,system-ui,sans-serif;padding:8px 16px;text-align:center">
-Local preview · sample content only · changes vanish on refresh · “Editor sign-in” in the footer shows the writing tools · Claude buttons work after deploying</div>`;
+const banner = `<div style="position:sticky;top:0;z-index:9;background:#75465A;color:#FFFFFF;font:500 13px/1.5 Inter,system-ui,sans-serif;padding:8px 16px;text-align:center">
+Local preview · sample content only · changes vanish on refresh · signed in as an editor (Edit and Delete are on each poem page) · Claude buttons work after deploying</div>`;
 const types = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".css": "text/css; charset=utf-8",
   ".svg": "image/svg+xml", ".jpg": "image/jpeg", ".png": "image/png", ".json": "application/json" };
 

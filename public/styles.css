@@ -1,13 +1,15 @@
 /* Layout: a literary journal. Compact header, one reading column for poems (≈720px), wider grids only for browsing. Cream is the canvas, burgundy carries identity, dusty rose carries romance. Single cream theme by choice. */
 :root {
-  --cream: #FBF5F0;
-  --card: #FFFCF9;
-  --rose: #D9A6AD;
-  --burgundy: #713C4C;
-  --ink: #4A3939;
+  --cream: #FBF6F2;      /* Vanilla Cream */
+  --card: #FFFAF7;
+  --rose: #D8A7B3;       /* Dusty Rose: underlines, line art */
+  --burgundy: #75465A;   /* Muted Berry */
+  --ink: #493C40;        /* Warm Ink */
   --ink-soft: #765F5F;
-  --blush: #E9D5D2;
-  --gold: #A18468;
+  --blush: #E8C9D0;      /* borders and dividers */
+  --soft: #F2DDE3;       /* Sakura Pink: hovers, selected toggles */
+  --blossom: #E8BFCB;    /* sakura blossoms */
+  --gold: #A9957D;       /* Antique Gold */
   --danger: #9B2C2C;
   --hi-display: "Tiro Devanagari Hindi", "Noto Serif Devanagari", "Kohinoor Devanagari", serif;
   --hi-read: "Noto Serif Devanagari", "Tiro Devanagari Hindi", "Kohinoor Devanagari", serif;
@@ -23,11 +25,11 @@ h1, h2, h3 { text-wrap: balance; }
 button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--burgundy); outline-offset: 3px; border-radius: 2px; }
 .btn { font-family: var(--ui); font-size: .95rem; font-weight: 500; padding: 11px 22px; border-radius: 999px; border: 1.5px solid var(--burgundy); background: transparent; color: var(--burgundy); display: inline-flex; gap: 8px; align-items: center; }
-.btn.primary { background: var(--burgundy); color: var(--cream); }
+.btn.primary { background: var(--burgundy); color: #FFFFFF; }
 .btn.small { padding: 7px 14px; font-size: .85rem; }
 .btn.danger { border-color: var(--danger); color: var(--danger); }
-.btn:hover { background: var(--blush); }
-.btn.primary:hover { background: #5d3140; }
+.btn:hover { background: var(--soft); }
+.btn.primary:hover { background: #5F3848; }
 .btn:disabled { opacity: .5; cursor: default; }
 .link { border: 0; background: none; padding: 2px 0; color: var(--burgundy); text-decoration: underline; text-decoration-color: var(--rose); text-underline-offset: 4px; font-size: .95rem; }
 .eyebrow { font-family: var(--ui); font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--burgundy); }
@@ -45,7 +47,7 @@ nav.main button:hover { color: var(--burgundy); }
 nav.main button[aria-current="page"] { color: var(--burgundy); border-bottom-color: var(--rose); font-weight: 500; }
 .lang { display: inline-flex; border: 1px solid var(--blush); border-radius: 999px; overflow: hidden; }
 .lang button { border: 0; background: none; padding: 5px 12px; font-size: .8rem; color: var(--ink-soft); }
-.lang button[aria-pressed="true"] { background: var(--burgundy); color: var(--cream); }
+.lang button[aria-pressed="true"] { background: var(--burgundy); color: #FFFFFF; }
 @media (max-width: 860px) {
   header.site { align-items: flex-start; }
   .nav-wrap { width: 100%; justify-content: space-between; }
@@ -77,24 +79,24 @@ section.block:first-child { border-top: 0; }
 /* Feelings */
 .feelings { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; }
 .feel { border: 1px solid var(--blush); background: var(--card); border-radius: 6px; padding: 22px 20px; text-align: start; display: grid; gap: 4px; align-content: start; }
-.feel:hover { background: var(--blush); }
+.feel:hover { background: var(--soft); }
 .feel span { display: block; }
 .feel .fh { font-family: var(--hi-display); font-size: 1.6rem; color: var(--burgundy); line-height: 1.3; }
 .feel .fe { font-family: var(--en); font-style: italic; font-size: 1.2rem; }
 .feel .fd { font-size: .88rem; color: var(--ink-soft); }
-.feel .fc { font-size: .78rem; color: var(--gold); font-variant-numeric: tabular-nums; margin-top: 6px; letter-spacing: .04em; }
+.feel .fc { font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; margin-top: 6px; letter-spacing: .04em; }
 
 /* About */
 .about-home { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 32px; align-items: center; }
 .portrait { width: 160px; height: 200px; object-fit: cover; border-radius: 100px 100px 6px 6px; border: 1px solid var(--blush); }
-.portrait-ph { width: 160px; height: 200px; border-radius: 100px 100px 6px 6px; background: var(--blush); display: grid; place-items: center; color: var(--rose); }
+.portrait-ph { width: 160px; height: 200px; border-radius: 100px 100px 6px 6px; background: var(--soft); display: grid; place-items: center; color: var(--rose); }
 .about-text { font-family: var(--hi-read); font-size: 1.12rem; line-height: 1.9; white-space: pre-wrap; margin: 0; max-width: 62ch; }
 @media (max-width: 640px) { .about-home { grid-template-columns: minmax(0, 1fr); } }
 
 /* Poem cards */
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 18px; }
 .pcard { border: 1px solid var(--blush); background: var(--card); border-radius: 6px; padding: 24px; text-align: start; display: grid; gap: 6px; align-content: start; min-width: 0; }
-.pcard:hover { background: #F8ECE8; }
+.pcard:hover { background: var(--soft); }
 .pcard span { display: block; min-width: 0; }
 .pcard .pt { font-family: var(--hi-display); font-size: 1.55rem; line-height: 1.3; color: var(--burgundy); }
 .pcard .pe { font-family: var(--en); font-style: italic; font-size: 1.15rem; color: var(--ink); }
@@ -104,7 +106,7 @@ section.block:first-child { border-top: 0; }
 
 .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .chip { border: 1px solid var(--blush); background: var(--card); border-radius: 999px; padding: 6px 14px; font-size: .9rem; color: var(--ink); }
-.chip[aria-pressed="true"] { background: var(--burgundy); border-color: var(--burgundy); color: var(--cream); }
+.chip[aria-pressed="true"] { background: var(--burgundy); border-color: var(--burgundy); color: #FFFFFF; }
 .chip .hi { font-family: var(--hi-read); }
 input, textarea, select { font: inherit; color: var(--ink); background: var(--card); border: 1px solid var(--blush); border-radius: 6px; padding: 10px 14px; width: 100%; }
 input:focus, textarea:focus, select:focus { border-color: var(--rose); }
@@ -123,7 +125,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); }
 .byline { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
 .seg { display: inline-flex; border: 1px solid var(--blush); border-radius: 999px; overflow: hidden; justify-self: center; }
 .seg button { border: 0; background: none; padding: 7px 16px; font-size: .85rem; color: var(--ink-soft); }
-.seg button[aria-pressed="true"] { background: var(--blush); color: var(--burgundy); font-weight: 600; }
+.seg button[aria-pressed="true"] { background: var(--soft); color: var(--burgundy); font-weight: 600; }
 .hindi { font-family: var(--hi-read); font-size: clamp(1.25rem, 2vw, 1.6rem); line-height: 1.95; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; color: var(--ink); }
 .reader .hindi, .reader .en-body { text-align: center; }
 .translation { display: grid; gap: 14px; padding-top: 28px; border-top: 1px solid var(--blush); }
@@ -136,7 +138,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--rose); }
 .share a.btn { text-decoration: none; }
 .status { font-size: .88rem; color: var(--ink-soft); min-height: 1.3em; }
 .status.err { color: var(--danger); }
-.confirm { background: var(--blush); padding: 12px 16px; border-radius: 6px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.confirm { background: var(--soft); padding: 12px 16px; border-radius: 6px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .writer-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 .exit-reading { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: none; }
 body.reading header.site, body.reading footer.site, body.reading .crumbs, body.reading .share, body.reading #share-status,
@@ -159,7 +161,7 @@ form.editor label small, .field small { font-weight: 400; color: var(--ink-soft)
 textarea.f-hi, textarea.f-en { min-height: 260px; resize: vertical; }
 .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 18px; }
 .drop { border: 1.5px dashed var(--rose); border-radius: 6px; padding: 18px; display: grid; gap: 10px; }
-.drop.over { background: var(--blush); }
+.drop.over { background: var(--soft); }
 .drop img { max-height: 260px; width: auto; border-radius: 4px; }
 .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .kind { display: flex; gap: 18px; flex-wrap: wrap; }
@@ -182,7 +184,7 @@ footer.site .flinks a:hover, footer.site .flinks button:hover { color: var(--bur
 /* Real links (public site): cards, nav and buttons are <a> elements so search engines can follow them. */
 a.pcard, a.feel, a.btn, a.logo { text-decoration: none; color: inherit; }
 a.btn { color: var(--burgundy); }
-a.btn.primary { color: var(--cream); }
+a.btn.primary { color: #FFFFFF; }
 a.logo { display: grid; }
 nav.main a { padding: 8px 12px; font-size: .95rem; color: var(--ink); white-space: nowrap; border-bottom: 2px solid transparent; text-decoration: none; }
 nav.main a:hover { color: var(--burgundy); }
@@ -196,7 +198,7 @@ a.chip { text-decoration: none; }
 
 /* Author portrait in the hero: an arched frame, like a page from an old book, with the line-art rose tucked at its foot. */
 .hero-photo { position: relative; margin: 0; justify-self: center; width: 100%; max-width: 360px; display: grid; gap: 10px; }
-.hero-photo img { width: 100%; height: auto; aspect-ratio: 5 / 6; object-fit: cover; object-position: center 18%; border-radius: 999px 999px 8px 8px; border: 1px solid var(--blush); box-shadow: 0 0 0 8px var(--cream), 0 0 0 9px var(--blush); background: var(--blush); }
+.hero-photo img { width: 100%; height: auto; aspect-ratio: 5 / 6; object-fit: cover; object-position: center 18%; border-radius: 999px 999px 8px 8px; border: 1px solid var(--blush); box-shadow: 0 0 0 8px var(--cream), 0 0 0 9px var(--blush); background: var(--soft); }
 .hero-photo figcaption { text-align: center; font-family: var(--en); font-style: italic; font-size: 1.1rem; color: var(--ink-soft); }
 .portrait-lg { width: min(260px, 100%); height: auto; aspect-ratio: 5 / 6; }
 @media (max-width: 720px) {
@@ -207,7 +209,7 @@ a.chip { text-decoration: none; }
 :root {
   --petal: #F3DCDF;      /* palest blossom */
   --rose-deep: #C48A93;  /* petal outlines */
-  --bark: #8C6B5E;       /* branches, a warm brown beside antique rose gold */
+  --bark: #A9957D;       /* branches */
 }
 .wrap { position: relative; z-index: 1; }
 
@@ -228,7 +230,7 @@ body[data-view="entry"] .sakura-side, body[data-view="edit"] .sakura-side, body.
 .hero { position: relative; }
 .petals { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
 .hero > div:not(.petals), .hero-photo { position: relative; z-index: 1; }
-.petals i { position: absolute; top: -20px; left: calc(8% + var(--i) * 13%); width: 11px; height: 13px; background: var(--rose); opacity: 0; border-radius: 150% 0 150% 0; display: none; }
+.petals i { position: absolute; top: -20px; left: calc(8% + var(--i) * 13%); width: 11px; height: 13px; background: var(--blossom); opacity: 0; border-radius: 150% 0 150% 0; display: none; }
 @media (prefers-reduced-motion: no-preference) {
   .petals i { display: block; animation: petal-fall calc(15s + var(--i) * 2.3s) linear calc(var(--i) * -2.7s) infinite; }
   .petals i:nth-child(even) { background: var(--petal); border: 1px solid var(--rose); width: 9px; height: 11px; }
@@ -245,7 +247,7 @@ body[data-view="entry"] .sakura-side, body[data-view="edit"] .sakura-side, body.
 section + section.block { position: relative; }
 section + section.block::before {
   content: ""; position: absolute; top: -10px; left: 50%; width: 20px; height: 20px; transform: translateX(-50%);
-  background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-26 -26 52 52'%3E%3Cg fill='%23D9A6AD' stroke='%23C48A93' stroke-width='1.2'%3E%3Cpath d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(72)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(144)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(216)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(288)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3C/g%3E%3Ccircle r='3' fill='%23A18468'/%3E%3C/svg%3E") center / 16px no-repeat;
+  background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-26 -26 52 52'%3E%3Cg fill='%23E8BFCB' stroke='%23C48A93' stroke-width='1.2'%3E%3Cpath d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(72)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(144)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(216)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3Cpath transform='rotate(288)' d='M0 -2 C -8 -7, -11 -17, -6 -23 L 0 -19.5 L 6 -23 C 11 -17, 8 -7, 0 -2 Z'/%3E%3C/g%3E%3Ccircle r='3' fill='%23A18468'/%3E%3C/svg%3E") center / 16px no-repeat;
   padding-inline: 6px; box-sizing: content-box;
 }
 
@@ -284,3 +286,110 @@ html[lang="hi"] .facts dt { letter-spacing: .01em; font-size: .88rem; }
   .about-photo .hero-sprig { width: 130px; height: 100px; right: -26px; top: -18px; }
 }
 @media (max-width: 480px) { .facts div { grid-template-columns: 5.2em minmax(0, 1fr); } }
+
+/* ---------- Poem page: the poem written on a sheet of journal paper ---------- */
+:root {
+  --sheet: #FFFCF7;
+  --sheet-edge: #EBDDD3;
+  /* fine paper grain */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .32 0 0 0 0 .28 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+.reader { gap: 22px; }
+.sheet {
+  position: relative;
+  display: grid; gap: 26px;
+  padding: clamp(40px, 7vw, 72px) clamp(22px, 7vw, 76px) clamp(36px, 6vw, 60px);
+  margin: 18px clamp(4px, 1.5vw, 12px) 10px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.75), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(233,213,210,.35), transparent 70%),
+    var(--grain), var(--sheet);
+  border: 1px solid var(--sheet-edge);
+  border-radius: 3px;
+  /* an inner rule, like good letter paper, and a soft lift off the table */
+  box-shadow:
+    inset 0 0 0 14px var(--sheet), inset 0 0 0 15px rgba(216, 167, 179, .45),
+    0 1px 2px rgba(73, 60, 64, .06), 0 22px 44px -26px rgba(117, 70, 90, .38);
+}
+/* two pages of the same stack peeking out behind */
+.sheet::before, .sheet::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 3px;
+  background: var(--grain), #FBF4EC; border: 1px solid var(--sheet-edge);
+  box-shadow: 0 10px 26px -20px rgba(117, 70, 90, .35);
+}
+.sheet::before { transform: rotate(-1.6deg) translate(-6px, 6px); }
+.sheet::after { transform: rotate(1.1deg) translate(7px, 10px); background: var(--grain), #F8EEE6; }
+/* a strip of blush washi tape holding the page */
+.sheet .tape {
+  position: absolute; top: -16px; left: 50%; width: 132px; height: 32px; transform: translateX(-50%) rotate(-2.5deg);
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 6px, transparent 6px 12px), rgba(216, 167, 179, .55);
+  box-shadow: 0 1px 3px rgba(73, 60, 64, .12);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 97% 96%, 3% 100%, 0 50%);
+}
+.sheet .sheet-sprig { position: absolute; top: -20px; right: -28px; width: 150px; height: 115px; pointer-events: none; }
+.sheet .poem-head { gap: 6px; }
+.sheet .sheet-orn { width: 18px; height: 18px; justify-self: center; opacity: .85; }
+.sheet .translation { border-top: 0; padding-top: 0; }
+.sheet .signature { margin-top: 6px; }
+.reader .share { border-top: 0; padding-top: 6px; }
+@media (max-width: 600px) {
+  .sheet { margin-inline: 2px; }
+  .sheet::before { transform: rotate(-1deg) translate(-3px, 5px); }
+  .sheet::after { transform: rotate(.8deg) translate(3px, 8px); }
+  .sheet .sheet-sprig { width: 110px; height: 85px; right: -10px; top: -16px; }
+  .sheet .tape { width: 104px; height: 26px; top: -13px; }
+  .sheet { box-shadow: inset 0 0 0 9px var(--sheet), inset 0 0 0 10px rgba(216, 167, 179, .45), 0 1px 2px rgba(73, 60, 64, .06), 0 18px 36px -24px rgba(117, 70, 90, .38); }
+}
+/* keep the stacked pages from causing sideways scroll on phones */
+html, body { overflow-x: clip; }
+
+/* More sakura on the poem page: a second branch, petals fallen on the paper, a blossom by the signature */
+.sheet .sheet-sprig-bl { top: auto; right: auto; bottom: -22px; left: -34px; transform: rotate(180deg); }
+.sheet > *:not(.tape):not(.sheet-sprig):not(.loose-petals) { position: relative; z-index: 1; }
+.loose-petals { position: absolute; inset: 0; pointer-events: none; }
+.loose-petals i { position: absolute; width: 11px; height: 13px; border-radius: 150% 0 150% 0; background: var(--blossom); opacity: .5; }
+.loose-petals i:nth-child(even) { background: var(--petal); border: 1px solid var(--rose); opacity: .8; width: 9px; height: 11px; }
+.loose-petals i:nth-child(1) { top: 64px; left: 9%; transform: rotate(25deg); }
+.loose-petals i:nth-child(2) { top: 92px; left: 13%; transform: rotate(-40deg); }
+.loose-petals i:nth-child(3) { top: 38%; right: 7%; transform: rotate(70deg); }
+.loose-petals i:nth-child(4) { top: 41%; right: 10.5%; transform: rotate(10deg); }
+.loose-petals i:nth-child(5) { top: 66%; left: 6.5%; transform: rotate(-15deg); }
+.loose-petals i:nth-child(6) { bottom: 72px; right: 16%; transform: rotate(120deg); }
+.signature .sig-blossom { width: 20px; height: 20px; vertical-align: -3px; margin-inline-start: 4px; }
+@media (max-width: 600px) {
+  .sheet .sheet-sprig-bl { width: 100px; height: 78px; bottom: -14px; left: -12px; }
+  .loose-petals i:nth-child(3), .loose-petals i:nth-child(4) { right: 4%; }
+  .loose-petals i:nth-child(5) { left: 3.5%; }
+}
+
+/* Side branches return on poem pages, softly faded so the poem stays the focus */
+body[data-view="entry"] .sakura-side { display: none; }
+@media (min-width: 1380px) { body[data-view="entry"] .sakura-side { display: block; opacity: .45; } }
+
+/* Delete sits apart from Save in the editor, so it isn't pressed by accident */
+.editor-delete { border-top: 1px dashed var(--blush); padding-top: 16px; justify-content: flex-end; }
+
+/* ---------- Kalam: the fountain-pen scrollbar (desktop only; see kalam-scroll.js) ---------- */
+.kalam { position: fixed; top: 12px; bottom: 12px; right: 6px; width: 22px; z-index: 20; cursor: pointer; opacity: .78; transition: opacity .3s; }
+.kalam[hidden] { display: none; }
+.kalam:hover, .kalam.writing, .kalam.dragging, .kalam:focus-within { opacity: 1; }
+/* one cream strip; the part above the pen fills with a rose-to-berry ink line */
+.kalam-track { position: absolute; left: 50%; top: 0; bottom: 0; width: 6px; transform: translateX(-50%); border-radius: 3px; background: var(--cream); border: 1px solid var(--blush); }
+.kalam-ink { position: absolute; left: 50%; top: 2px; width: 2px; transform: translateX(-50%); border-radius: 2px; background: linear-gradient(#D8A7B3, #75465A); }
+.kalam-pen { position: absolute; top: 0; left: 0; width: 22px; height: 112px; cursor: grab; touch-action: none; outline: none; }
+.kalam-pen svg { display: block; transform-origin: 50% 100%; transition: transform .25s ease, filter .25s ease; }
+.kalam:hover .kalam-pen svg, .kalam.dragging .kalam-pen svg { filter: drop-shadow(0 0 4px rgba(169, 149, 125, .85)); }
+.kalam.dragging .kalam-pen { cursor: grabbing; }
+.kalam.writing .kalam-pen svg, .kalam.dragging .kalam-pen svg { transform: rotate(-7deg); }
+.kalam-pen:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 12px; }
+@media (prefers-reduced-motion: reduce) {
+  .kalam, .kalam-pen svg { transition: none; }
+  .kalam.writing .kalam-pen svg, .kalam.dragging .kalam-pen svg { transform: none; }
+}
+/* one scrollbar only: hide the browser's own while the pen is active */
+html.kalam-on { scrollbar-width: none; }
+html.kalam-on::-webkit-scrollbar { display: none; }
+/* keep the pen clear of the exit-reading button, the right-hand branch and the text */
+html.kalam-on .exit-reading { right: 48px; }
+html.kalam-on .sakura-side.right { right: 32px; }
+@media (max-width: 1240px) { html.kalam-on .wrap { padding-right: 44px; } }

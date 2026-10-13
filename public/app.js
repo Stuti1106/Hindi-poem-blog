@@ -30,7 +30,7 @@ const ABOUT_FACTS = {
 const aboutIntro = () => about.intro || DEFAULT_ABOUT[lang].intro;
 const aboutBio = () => about.bio || DEFAULT_ABOUT[lang].bio;
 // Sakura is the site's motif; the rose belongs only to the मोहब्बत (Love) collection.
-const blossom = (cls = "blossom") => `<svg class="${cls}" viewBox="-26 -26 52 52" aria-hidden="true"><use href="#sk-flower" fill="var(--rose)"/></svg>`;
+const blossom = (cls = "blossom") => `<svg class="${cls}" viewBox="-26 -26 52 52" aria-hidden="true"><use href="#sk-flower" fill="var(--blossom)"/></svg>`;
 const sprig = (cls = "sprig") => `<svg class="${cls}" viewBox="0 0 170 130" aria-hidden="true"><use href="#sakura-sprig"/></svg>`;
 const rose = (cls = "rose-mark") => `<svg class="${cls}" viewBox="0 0 200 260" aria-hidden="true"><use href="#rose"/></svg>`;
 const catMark = key => key === "love" ? rose() : "";
@@ -471,7 +471,7 @@ function renderHome() {
         <p class="hindi" lang="hi">${esc(firstLines(feat.body, 6))}</p>
       </div>
       <div style="display:grid;gap:18px;align-content:space-between">
-        ${feat.bodyEn ? `<div lang="en"><div class="eyebrow" style="color:var(--gold)">${t("translationLabel")}</div><p class="en-body" style="margin-top:10px">${esc(firstLines(feat.bodyEn, 6))}</p></div>` : "<div></div>"}
+        ${feat.bodyEn ? `<div lang="en"><div class="eyebrow">${t("translationLabel")}</div><p class="en-body" style="margin-top:10px">${esc(firstLines(feat.bodyEn, 6))}</p></div>` : "<div></div>"}
         <div>${link(`/poem/${feat.id}`, `${t("readPoem")} →`, "btn primary")}</div>
       </div>
     </div>`;
@@ -584,21 +584,29 @@ function renderEntry() {
         ${link(isJ ? "/journal" : "/poems", isJ ? t("journalCrumb") : t("poemsCrumb"))}
         ${c ? ` → ${link(`/poems/${c.key}`, c.hi)}` : ""}
       </div>
-      <header class="poem-head">
-        ${c ? `${c.key === "love" ? rose("rose-mark poem-rose") : ""}<div class="eyebrow">${esc(catPair(e.category))}</div>` : isJ ? `<div class="eyebrow">${t("journalCrumb")}</div>` : ""}
-        <h1 lang="hi">${esc(e.title || t("untitled"))}</h1>
-        ${e.titleEn ? `<p class="en-title" lang="en">${esc(e.titleEn)}</p>` : ""}
-        <div class="byline">${t("by")} · ${t("minRead", minutes(e))}${e.writtenOn ? " · " + esc(fmtDate(e.writtenOn)) : ""}</div>
-      </header>
       ${hasEn ? `<div class="seg" role="group" aria-label="${esc(t("translationLabel"))}">
         <button data-rv="hi" aria-pressed="${mode === "hi"}">${t("viewHi")}</button>
         <button data-rv="en" aria-pressed="${mode === "en"}">${t("viewEn")}</button>
         <button data-rv="both" aria-pressed="${mode === "both"}">${t("viewBoth")}</button></div>` : ""}
-      ${mode !== "en" ? `<p class="hindi" lang="hi">${esc(e.body)}</p>` : ""}
-      ${hasEn && mode !== "hi" ? `<div class="translation" lang="en">
-          <div class="eyebrow">${t("translationLabel")}</div>
-          <p class="en-body">${esc(e.bodyEn)}</p></div>` : ""}
-      <p class="signature">— ${POET[lang]}</p>
+      <div class="sheet">
+        <span class="tape" aria-hidden="true"></span>
+        ${sprig("sheet-sprig")}
+        ${sprig("sheet-sprig sheet-sprig-bl")}
+        <span class="loose-petals" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <header class="poem-head">
+          ${c ? `${c.key === "love" ? rose("rose-mark poem-rose") : ""}<div class="eyebrow">${esc(catPair(e.category))}</div>` : isJ ? `<div class="eyebrow">${t("journalCrumb")}</div>` : ""}
+          <h1 lang="hi">${esc(e.title || t("untitled"))}</h1>
+          ${e.titleEn ? `<p class="en-title" lang="en">${esc(e.titleEn)}</p>` : ""}
+          <div class="byline">${t("by")} · ${t("minRead", minutes(e))}${e.writtenOn ? " · " + esc(fmtDate(e.writtenOn)) : ""}</div>
+        </header>
+        ${blossom("sheet-orn")}
+        ${mode !== "en" ? `<p class="hindi" lang="hi">${esc(e.body)}</p>` : ""}
+        ${hasEn && mode === "both" ? blossom("sheet-orn") : ""}
+        ${hasEn && mode !== "hi" ? `<div class="translation" lang="en">
+            <div class="eyebrow">${t("translationLabel")}</div>
+            <p class="en-body">${esc(e.bodyEn)}</p></div>` : ""}
+        <p class="signature">— ${POET[lang]} ${blossom("sig-blossom")}</p>
+      </div>
       ${e.photoUrl ? `<details class="orig"><summary>${t("seeOrig")}</summary><img src="${esc(e.photoUrl)}" alt="${esc(e.title)}" loading="lazy"></details>` : ""}
       <div class="share">
         <button class="btn small" data-copy="${esc(url)}">${t("copyLink")}</button>
@@ -822,6 +830,9 @@ function renderEditor() {
           <button class="btn primary" type="submit" id="save-btn">${t("saveBtn")}</button>
           <span class="status" id="save-status"></span>
         </div>
+        ${d.id ? `<div class="row editor-delete" id="writer-actions">
+          <button type="button" class="btn small danger" data-ask-del>${t("del")}</button>
+        </div>` : ""}
       </form>
     </div>`;
   paintPhoto();
@@ -988,10 +999,10 @@ document.addEventListener("click", async ev => {
   else if (d.edit) openEditor(d.edit);
   else if (b.hasAttribute("data-cancel-edit")) { const id = view.id; draft = null; go(id ? `/poem/${id}` : "/"); }
   else if (b.hasAttribute("data-ask-del")) {
-    $("#writer-actions").innerHTML = `<div class="confirm">${t("delConfirm")} <button class="btn small danger" data-del="${esc(view.id)}">${t("delYes")}</button><button class="link" data-keep>${t("delNo")}</button></div>`;
+    $("#writer-actions").innerHTML = `<div class="confirm">${t("delConfirm")} <button type="button" class="btn small danger" data-del="${esc(view.id)}">${t("delYes")}</button><button type="button" class="link" data-keep>${t("delNo")}</button></div>`;
   }
   else if (d.del) removeEntry(d.del);
-  else if (b.hasAttribute("data-keep")) renderEntry();
+  else if (b.hasAttribute("data-keep")) view.name === "edit" ? renderEditor() : renderEntry();
   else if (d.editSite) { editing = d.editSite; portraitDraft = null; render(); }
   else if (b.hasAttribute("data-cancel-site")) { editing = null; portraitDraft = null; render(); }
   else if (b.hasAttribute("data-signin")) {
