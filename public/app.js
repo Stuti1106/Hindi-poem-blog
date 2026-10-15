@@ -1061,7 +1061,9 @@ document.addEventListener("click", async ev => {
     catch (e) {
       console.error(e);
       if (e?.code === "auth/popup-closed-by-user" || e?.code === "auth/cancelled-popup-request") return;
-      authNote = e?.code === "auth/configuration-not-found" || e?.code === "auth/operation-not-allowed" ? t("signInOff")
+      // Firebase sometimes reports "sign-in not set up" as an internal error with the reason in the message.
+      const notSetUp = ["auth/configuration-not-found", "auth/operation-not-allowed"].includes(e?.code) || /CONFIGURATION_NOT_FOUND|OPERATION_NOT_ALLOWED/.test(String(e?.message));
+      authNote = notSetUp ? t("signInOff")
         : e?.code === "auth/unauthorized-domain" ? t("signInDomain")
         : e?.code === "auth/popup-blocked" ? t("signInPopup")
         : t("signInFail");
