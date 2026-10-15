@@ -18,6 +18,7 @@
   color-scheme: light;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { background: var(--cream); }
 body { background: var(--cream); color: var(--ink); font-family: var(--ui); font-size: 17px; line-height: 1.65; }
 .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; }
@@ -317,8 +318,8 @@ html[lang="hi"] .facts dt { letter-spacing: .01em; font-size: .88rem; }
   background: var(--grain), #FBF4EC; border: 1px solid var(--sheet-edge);
   box-shadow: 0 10px 26px -20px rgba(117, 70, 90, .35);
 }
-.sheet::before { transform: rotate(-1.6deg) translate(-6px, 6px); }
-.sheet::after { transform: rotate(1.1deg) translate(7px, 10px); background: var(--grain), #F8EEE6; }
+.sheet::before { transform: rotate(-.6deg) translate(-6px, 6px); }
+.sheet::after { transform: rotate(.45deg) translate(7px, 10px); background: var(--grain), #F8EEE6; }
 /* a strip of blush washi tape holding the page */
 .sheet .tape {
   position: absolute; top: -16px; left: 50%; width: 132px; height: 32px; transform: translateX(-50%) rotate(-2.5deg);
@@ -334,8 +335,8 @@ html[lang="hi"] .facts dt { letter-spacing: .01em; font-size: .88rem; }
 .reader .share { border-top: 0; padding-top: 6px; }
 @media (max-width: 600px) {
   .sheet { margin-inline: 2px; }
-  .sheet::before { transform: rotate(-1deg) translate(-3px, 5px); }
-  .sheet::after { transform: rotate(.8deg) translate(3px, 8px); }
+  .sheet::before { transform: rotate(-.5deg) translate(-3px, 5px); }
+  .sheet::after { transform: rotate(.4deg) translate(3px, 8px); }
   .sheet .sheet-sprig { width: 110px; height: 85px; right: -10px; top: -16px; }
   .sheet .tape { width: 104px; height: 26px; top: -13px; }
   .sheet { box-shadow: inset 0 0 0 9px var(--sheet), inset 0 0 0 10px rgba(216, 167, 179, .45), 0 1px 2px rgba(73, 60, 64, .06), 0 18px 36px -24px rgba(117, 70, 90, .38); }

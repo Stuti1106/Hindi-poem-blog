@@ -58,7 +58,7 @@ const STR = {
     readPoem: "पूरी कविता पढ़ें",
     browse: "एहसास के रास्ते",
     browseSub: "Browse by feeling",
-    poemsCount: n => `${n} कविताएँ`,
+    poemsCount: n => n === 1 ? "1 कविता" : `${n} कविताएँ`,
     aboutPoet: "कवयित्री से मिलिए",
     readMoreAbout: "पूरा परिचय पढ़ें",
     loading: "पन्ने पलटे जा रहे हैं…",
