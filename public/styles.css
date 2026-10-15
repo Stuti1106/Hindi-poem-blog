@@ -394,3 +394,10 @@ html.kalam-on::-webkit-scrollbar { display: none; }
 html.kalam-on .exit-reading { right: 48px; }
 html.kalam-on .sakura-side.right { right: 32px; }
 @media (max-width: 1240px) { html.kalam-on .wrap { padding-right: 44px; } }
+
+/* Nidhi's sign-in page */
+.login-page { max-width: 560px; text-align: center; justify-items: center; padding-block: 64px 96px; }
+.login-page .row { justify-content: center; }
+.login-page .section-head { justify-items: center; }
+.login-blossom { width: 40px; height: 40px; }
+.login-google { font-size: 1.05rem; padding: 14px 28px; }

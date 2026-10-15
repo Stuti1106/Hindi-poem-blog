@@ -139,6 +139,17 @@ const STR = {
     signedInAs: e => `${e} से लॉग इन`,
     notEditor: e => `${e} लेखक के रूप में जुड़ा नहीं है। वेबसाइट के मालिक से इसे जोड़ने को कहें।`,
     signInFail: "लॉग इन नहीं हो सका। फिर कोशिश करें।",
+    loginTitle: "लेखक लॉगिन",
+    loginSub: "Editor sign-in",
+    loginIntro: "यह पन्ना निध्याक्षर की लेखिका के लिए है। अपने Google खाते से लॉग इन करें, फिर आप कविताएँ लिख, बदल और हटा सकेंगी।",
+    loginGoogle: "Google से लॉग इन करें",
+    loginReady: "आप लेखक के रूप में लॉग इन हैं। अब आप नई कविता लिख सकती हैं, और हर कविता के पन्ने पर “संपादित करें” और “हटाएँ” दिखेंगे।",
+    loginWrite: "+ नई रचना लिखें",
+    loginHome: "मुखपृष्ठ पर जाएँ",
+    loginTip: "सुझाव: इस पन्ने को बुकमार्क कर लें।",
+    signInOff: "लॉग इन अभी चालू नहीं है। वेबसाइट के मालिक को Firebase में Google sign-in चालू करना होगा।",
+    signInDomain: "यह पता (domain) अभी लॉग इन के लिए जुड़ा नहीं है। वेबसाइट के मालिक को इसे Firebase में जोड़ना होगा।",
+    signInPopup: "लॉग इन की खिड़की नहीं खुल सकी। ब्राउज़र में pop-ups की अनुमति दें और फिर कोशिश करें।",
     cancel: "रद्द करें",
     saveBtn: "सहेजें",
     saving: "सहेजा जा रहा है…",
@@ -277,6 +288,17 @@ const STR = {
     signedInAs: e => `Signed in as ${e}`,
     notEditor: e => `${e} isn't set up as an editor. Ask the site owner to add it.`,
     signInFail: "Sign-in didn't work. Please try again.",
+    loginTitle: "लेखक लॉगिन",
+    loginSub: "Editor sign-in",
+    loginIntro: "This page is for Nidhyakshar's author. Sign in with your Google account to write, edit and delete poems.",
+    loginGoogle: "Sign in with Google",
+    loginReady: "You're signed in as an editor. You can write a new poem now, and every poem page will show Edit and Delete.",
+    loginWrite: "+ Write something new",
+    loginHome: "Go to the home page",
+    loginTip: "Tip: bookmark this page.",
+    signInOff: "Sign-in isn't switched on yet. The site owner needs to enable Google sign-in in Firebase.",
+    signInDomain: "This web address isn't allowed for sign-in yet. The site owner needs to add it in Firebase.",
+    signInPopup: "The sign-in window couldn't open. Allow pop-ups for this site and try again.",
     cancel: "Cancel",
     saveBtn: "Save",
     saving: "Saving…",
@@ -380,7 +402,7 @@ function parsePath(p) {
   if (parts[0] === "poems") return parts[1] ? { name: "poems", cat: parts[1] } : { name: "poems" };
   if (parts[0] === "saved") return { name: "poems", saved: true };
   if (parts[0] === "poem" && parts[1]) return { name: "entry", id: parts[1] };
-  if (["journal", "about", "contact", "privacy"].includes(parts[0])) return { name: parts[0] };
+  if (["journal", "about", "contact", "privacy", "login"].includes(parts[0])) return { name: parts[0] };
   return { name: "home" };
 }
 function applyView(v) {
@@ -441,6 +463,7 @@ function render() {
   else if (v === "about") renderAbout();
   else if (v === "contact") renderContact();
   else if (v === "privacy") renderPrivacy();
+  else if (v === "login") renderLogin();
   else if (v === "edit") renderEditor();
 }
 
@@ -747,6 +770,33 @@ function renderContactForm() {
   };
 }
 
+// Nidhi's private sign-in page (nidhyakshar.in/login). Readers never need it.
+function renderLogin() {
+  setMeta(`${t("loginTitle")} · ${t("loginSub")}`, "");
+  let state;
+  if (user && canWrite) state = `
+      <p class="body-text">${t("loginReady")}</p>
+      <div class="row">
+        <button class="btn primary" data-new>${t("loginWrite")}</button>
+        ${link("/", t("loginHome"), "btn")}
+      </div>
+      <p class="note">${esc(t("signedInAs", user.email))} · <button class="link" data-signout>${t("signOut")}</button></p>`;
+  else if (user) state = `
+      <p class="status err">${esc(t("notEditor", user.email))}</p>
+      <div class="row"><button class="btn" data-signout>${t("signOut")}</button></div>`;
+  else state = `
+      <p class="body-text">${t("loginIntro")}</p>
+      <div><button class="btn primary login-google" data-signin>${t("loginGoogle")}</button></div>
+      ${authNote ? `<p class="status err">${esc(authNote)}</p>` : ""}
+      <p class="note">${t("loginTip")}</p>`;
+  main.innerHTML = `
+    <div class="prose login-page">
+      ${blossom("login-blossom")}
+      ${sectionHead(t("loginTitle"), t("loginSub"))}
+      ${state}
+    </div>`;
+}
+
 function renderPrivacy() {
   setMeta("गोपनीयता · Privacy", "निध्याक्षर की गोपनीयता नीति।");
   main.innerHTML = `<div class="prose">${sectionHead(t("privacyTitle"), t("privacySub"))}<p class="body-text">${esc(t("privacy"))}</p></div>`;
@@ -1008,9 +1058,18 @@ document.addEventListener("click", async ev => {
   else if (b.hasAttribute("data-signin")) {
     authNote = "";
     try { await signInWithPopup(auth, new GoogleAuthProvider()); }
-    catch (e) { if (e?.code !== "auth/popup-closed-by-user") { authNote = t("signInFail"); paintChrome(); } }
+    catch (e) {
+      console.error(e);
+      if (e?.code === "auth/popup-closed-by-user" || e?.code === "auth/cancelled-popup-request") return;
+      authNote = e?.code === "auth/configuration-not-found" || e?.code === "auth/operation-not-allowed" ? t("signInOff")
+        : e?.code === "auth/unauthorized-domain" ? t("signInDomain")
+        : e?.code === "auth/popup-blocked" ? t("signInPopup")
+        : t("signInFail");
+      view.name === "login" ? renderLogin() : paintChrome();
+    }
   }
   else if (b.hasAttribute("data-signout")) { await signOut(auth); }
+  else if (b.hasAttribute("data-new")) openEditor(null);
 });
 $("#new-btn").onclick = () => openEditor(null);
 
